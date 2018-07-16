@@ -31,7 +31,7 @@ def lenet(X, is_training=True):
     conv1 = slim.conv2d(X, 6, [3, 3], scope='conv1') #shape [None, 28, 28, 6]
     mp1 = slim.max_pool2d(conv1, [2, 2], scope='pool1') #shape [None, 14, 14, 6]
     #second conv layer
-    conv2 = slim.conv2d(mp1, 16, [3, 3], scope='conv2') #shape [None, 28, 28, 16]
+    conv2 = slim.conv2d(mp1, 16, [3, 3], scope='conv2') #shape [None, 14, 14, 16]
     mp2 = slim.max_pool2d(conv2, [2, 2], scope='pool2') #shape [None, 7, 7, 16]
     #last fully connected layer
     mp2_flatten = tf.contrib.layers.flatten(mp2)
