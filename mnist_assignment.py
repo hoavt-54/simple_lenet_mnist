@@ -8,7 +8,7 @@ LetNet-5
 http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf
 
 The code in this submission implements a simple convolutional neural network containing 2 conv layers 
-which then followed by a fully connected layer. Each conv layer consists of a conv op and an pooling op.
+which then followed by 2 fully connected layers. Each conv layer consists of a conv op and an pooling op.
 I use maxpooling as pooling ops in this assignment. I also use TF-slim which reduce time of defining weights and biases. 
 
 This implementation differs from the original architecture as well as added some modern findings in deep learning
@@ -37,13 +37,13 @@ def lenet(X, is_training=True):
     mp2_flatten = tf.contrib.layers.flatten(mp2)
     fc1 = slim.fully_connected(mp2_flatten, 120, scope='fc1') #shape[None, 120]
     drp = slim.dropout(fc1, 0.6, is_training=is_training, scope='dropout1')
-    fc2 = slim.fully_connected(fc1, 84, scope='fc2') #shape[None, 84]
+    fc2 = slim.fully_connected(drp, 84, scope='fc2') #shape[None, 84]
     drp = slim.dropout(fc2, 0.6, is_training=is_training, scope='dropout2')
     #output layer, no activation fn because there will be a softmax later when calculaing the loss
     out = slim.fully_connected(drp, 10, activation_fn=None, scope='fc3') #shape[None, 10]
     return out 
 
-def train(mnist, lr=0.0001, num_epochs=8000, train_log=True):
+def train(mnist, lr=0.0001, num_epochs=8000, train_log=False):
     """
     Training using AdamOptimizer
     """
